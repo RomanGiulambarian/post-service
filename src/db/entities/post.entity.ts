@@ -8,8 +8,8 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { Media } from '../../media/entities/media.entity';
+import { User } from 'src/db/entities/user.entity';
+import { Media } from './media.entity';
 
 @Entity()
 export class Post {

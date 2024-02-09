@@ -22,7 +22,7 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
-  @MinLength(4)
+  @MinLength(8)
   @MaxLength(20)
   @Matches(passwordRegEx, {
     message: `Password must contain Minimum 8 and maximum 20 characters,

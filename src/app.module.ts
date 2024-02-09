@@ -1,15 +1,16 @@
-import { Module } from '@nestjs/common';
-import { UserModule } from './user/user.module';
-import { PostModule } from './post/post.module';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { UserModule } from './modules/user.module';
+import { PostModule } from './modules/post.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { User } from './user/entities/user.entity';
-import { Post } from './post/entities/post.entity';
-import { Media } from './media/entities/media.entity';
-import { AuthModule } from './auth/auth.module';
-import { MediaModule } from './media/media.module';
+import { User } from './db/entities/user.entity';
+import { Post } from './db/entities/post.entity';
+import { Media } from './db/entities/media.entity';
+import { AuthModule } from './modules/auth.module';
+import { MediaModule } from './modules/media.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { config } from './config/app.config';
 
 @Module({
   imports: [
@@ -19,14 +20,14 @@ import * as path from 'path';
       envFilePath: 'dev.env',
     }),
     ServeStaticModule.forRoot({
-      rootPath: path.resolve(__dirname, 'static'),
+      rootPath: path.resolve(__dirname),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.POSTGRES_HOST,
-      port: +process.env.POSTGRES_PORT,
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
+      host: config.POSTGRES_HOST,
+      port: config.POSTGRES_PORT,
+      username: config.POSTGRES_USER,
+      password: config.POSTGRES_PASSWORD,
       entities: [Post, User, Media],
       synchronize: true,
     }),

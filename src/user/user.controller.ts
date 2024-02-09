@@ -8,29 +8,22 @@ import {
   NotFoundException,
   Put,
   UseGuards,
+  Res,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AccessTokenGuard } from '../common/guards/access-token.guard';
+import { Response } from 'express';
+import { extendedRequest } from 'src/common/types/global.types';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.create(createUserDto);
-  }
-
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccessTokenGuard)
   @Get()
   async getAll() {
-    return await this.userService.findAll();
-  }
-
-  @Get('ddw')
-  async getAll1() {
     return await this.userService.findAll();
   }
 
@@ -45,19 +38,26 @@ export class UserController {
     }
   }
 
+  @UseGuards(AccessTokenGuard)
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return await this.userService.update(id, updateUserDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Req() req: extendedRequest,
+  ) {
+    return await this.userService.update(id, updateUserDto, req.user.email);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Res() res: Response) {
     const user = await this.userService.findOne(id);
 
     if (!user) {
       throw new NotFoundException('User does not exist!');
     }
 
-    return await this.userService.remove(id);
+    await this.userService.remove(id);
+
+    res.status(204).send().end();
   }
 }

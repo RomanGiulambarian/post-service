@@ -1,16 +1,11 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcryptjs';
-import { User } from 'src/user/entities/user.entity';
+import { User } from 'src/db/entities/user.entity';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { v4 as uuidv4 } from 'uuid';
+import { config } from 'src/config/app.config';
 
 @Injectable()
 export class AuthService {
@@ -20,12 +15,10 @@ export class AuthService {
   ) {}
 
   async login(authDto: CreateAuthDto) {
-    const user = await this.validateUser(authDto);
+    const user = await this.userService.validateUser(authDto);
+    const tokens = await this.generateToken(user);
 
-    const accessToken = await this.generateAccessToken(user);
-    const refreshToken = await this.generateRefreshToken(user);
-
-    return { accessToken, refreshToken };
+    return tokens;
   }
 
   async registration(userDto: CreateUserDto) {
@@ -41,49 +34,40 @@ export class AuthService {
       password: hashPassword,
     });
 
-    const accessToken = await this.generateAccessToken(user);
-    const refreshToken = await this.generateRefreshToken(user);
+    const tokens = await this.generateToken(user);
 
-    return { accessToken, refreshToken };
+    return tokens;
   }
 
   async refreshToken(authDto: CreateAuthDto) {
     const user = await this.userService.getUserByEmail(authDto.email);
 
-    if (user) {
-      throw new HttpException('Пользователь найден', HttpStatus.BAD_REQUEST);
+    if (!user) {
+      throw new HttpException('Пользователь не найден', HttpStatus.BAD_REQUEST);
     }
 
-    const accessToken = await this.generateAccessToken(user);
-
-    return { accessToken };
+    return await this.generateToken(user);
   }
 
-  private async generateAccessToken(user: User) {
+  private async generateToken(user: User) {
     const payload = { email: user.email, id: user.id };
 
-    return this.jwtService.sign(payload, { expiresIn: '15m' });
-  }
+    const [accessToken, refreshToken] = (
+      await Promise.all([
+        this.jwtService.signAsync(payload, {
+          secret: config.JWT_ACCESS_SECRET,
+          expiresIn: config.ACCESS_TOKEN_EXPIRES_HOURS + 'h',
+        }),
+        this.jwtService.signAsync(payload, {
+          secret: config.JWT_REFRESH_SECRET,
+          expiresIn: config.REFRESH_TOKEN_EXPIRES_DAYS + 'd',
+        }),
+      ])
+    ).map((token) => 'Bearer ' + token);
 
-  private async generateRefreshToken(user: User) {
-    const payload = { id: user.id, tokenId: uuidv4() };
-
-    return this.jwtService.sign(payload, { expiresIn: '7d' });
-  }
-
-  private async validateUser(userDto: CreateUserDto) {
-    const user = await this.userService.getUserByEmail(userDto.email);
-    const passwordEquals = await bcrypt.compare(
-      userDto.password,
-      user.password,
-    );
-
-    if (user && passwordEquals) {
-      return user;
-    }
-
-    throw new UnauthorizedException({
-      message: 'Некорректный емаил или пароль',
-    });
+    return {
+      accessToken,
+      refreshToken,
+    };
   }
 }

@@ -7,7 +7,7 @@ import {
   DeleteDateColumn,
   BaseEntity,
 } from 'typeorm';
-import { Post } from 'src/post/entities/post.entity';
+import { Post } from 'src/db/entities/post.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -20,7 +20,7 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @CreateDateColumn()
