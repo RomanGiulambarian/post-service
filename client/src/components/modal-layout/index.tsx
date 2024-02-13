@@ -4,9 +4,10 @@ import styles from "./ModalLayout.module.scss";
 interface ModalLayoutProps {
   children: ReactNode;
   onClose: () => void;
+  title: string;
 }
 
-const ModalLayout: FC<ModalLayoutProps> = ({ children, onClose }) => {
+const ModalLayout: FC<ModalLayoutProps> = ({ children, onClose, title }) => {
   return (
     <div className={styles.Modal} onClick={onClose}>
       <div
@@ -28,6 +29,7 @@ const ModalLayout: FC<ModalLayoutProps> = ({ children, onClose }) => {
             fill="#000"
           ></path>
         </svg>
+        <h2 className={styles.title}>{title}</h2>
         {children}
       </div>
     </div>

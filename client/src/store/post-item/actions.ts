@@ -3,11 +3,11 @@ import PostService from "../../api";
 
 export const deletePost = createAsyncThunk(
   "postItem/deletePost",
-  async (params: string) => {
+  async (id: string, thunkAPI) => {
     try {
-      return await PostService.delete(params);
+      return await PostService.delete(id);
     } catch (e) {
-      console.log(e);
+      return thunkAPI.rejectWithValue(e);
     }
   }
 );

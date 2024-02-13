@@ -26,6 +26,6 @@ export default class PostService {
       },
     });
 
-    return response.status;
+    return { status: response.status, id };
   }
 }

@@ -1,7 +1,10 @@
 .PostItem {
+  position: relative;
   border: 1px solid #f4f4f4;
   border-radius: 12px;
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04), 0px 2px 6px 0px rgba(0, 0, 0, 0.04),
+  box-shadow:
+    0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 6px 0px rgba(0, 0, 0, 0.04),
     0px 10px 20px 0px rgba(0, 0, 0, 0.04);
 
   &__img {
@@ -61,4 +64,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.deleteBtn {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  z-index: 2;
 }

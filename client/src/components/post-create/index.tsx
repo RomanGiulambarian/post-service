@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, FormEvent, memo } from "react";
 import ModalLayout from "../modal-layout";
 
 interface PostCreateProps {
@@ -6,10 +6,20 @@ interface PostCreateProps {
 }
 
 const PostCreate: FC<PostCreateProps> = ({ closeModal }) => {
-  console.log("1");
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // if (value.trim()) {
+    //   props.onSubmit(value);
+    //   setValue("");
+    //   props.onClickOnCancelBtn();
+    // } else {
+    //   alert("Пустой комментарий, введите текст");
+    // }
+  };
   return (
-    <ModalLayout onClose={closeModal}>
-      <div>321</div>
+    <ModalLayout onClose={closeModal} title="Создание поста">
+      <form onSubmit={handleSubmit}></form>
     </ModalLayout>
   );
 };

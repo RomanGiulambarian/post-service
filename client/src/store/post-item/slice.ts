@@ -24,19 +24,6 @@ export const postItemSlice = createSlice({
   name: "postItem",
   initialState,
   reducers: {},
-
-  extraReducers: (builder) => {
-    builder
-      .addCase(deletePost.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(deletePost.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(deletePost.rejected, (state) => {
-        state.isLoading = false;
-      });
-  },
 });
 
 export default postItemSlice.reducer;
