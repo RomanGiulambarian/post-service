@@ -1,0 +1,24 @@
+.PageLayout {
+    max-width: 1320px;
+    padding: 0 15px;
+    margin: 0 auto;
+
+    @media (max-width: 1400px) {
+        max-width: 1170px;
+    }
+
+    @media (max-width: 1200px) {
+        max-width: 990px
+    }
+
+    @media (max-width: 992px) {
+        max-width: 760px
+    }
+
+    @media (max-width: 768px) {
+        max-width: none;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+}

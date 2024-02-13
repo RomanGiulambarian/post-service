@@ -1,0 +1,12 @@
+.PostList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.smallPost__wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 631px));
+  align-items: start;
+  gap: 24px;
+}
