@@ -2,14 +2,24 @@ import { FC, memo } from "react";
 import styles from "./PostList.module.scss";
 import PostItem from "../post-item";
 import { RatingProps } from "../rating";
-import { Post } from "../../store/post-list/interface";
+import { Post, UpdateThunkArg } from "../../store/post-list/interface";
+import PostUpdate from "../post-update";
+import { ItemIdAndMediaArg } from "../../app/main";
 
 interface PostListProps extends RatingProps {
   postList: Post[];
   deletePost: (id: string) => void;
+  openModalUpdatePost: () => void;
+  setItemIdAndMedia: (arg: ItemIdAndMediaArg) => void;
 }
 
-const PostList: FC<PostListProps> = ({ rating, postList, deletePost }) => {
+const PostList: FC<PostListProps> = ({
+  rating,
+  postList,
+  deletePost,
+  openModalUpdatePost,
+  setItemIdAndMedia,
+}) => {
   return (
     <div className={styles.PostList}>
       {postList.length > 0 && (
@@ -21,6 +31,8 @@ const PostList: FC<PostListProps> = ({ rating, postList, deletePost }) => {
           description={postList[0].description}
           rating={rating}
           onDelete={deletePost}
+          openModalUpdatePost={openModalUpdatePost}
+          setItemIdAndMedia={setItemIdAndMedia}
         />
       )}
       <div className={styles.smallPost__wrapper}>
@@ -35,6 +47,8 @@ const PostList: FC<PostListProps> = ({ rating, postList, deletePost }) => {
               rating={rating}
               key={item.id}
               onDelete={deletePost}
+              openModalUpdatePost={openModalUpdatePost}
+              setItemIdAndMedia={setItemIdAndMedia}
             />
           ))}
       </div>

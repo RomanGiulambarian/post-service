@@ -1,17 +1,24 @@
-import { FC, FormEvent, memo, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import ModalLayout from "../modal-layout";
 import PostForm from "../post-form";
-import { PostResBody } from "../../api/interface";
+import { UpdateThunkArg } from "../../store/post-list/interface";
+import { ItemIdAndMediaArg } from "../../app/main";
 
-interface PostCreateProps {
+interface PostUpdateProps {
   closeModal: () => void;
-  createPost: (postParams: PostResBody) => void;
+  itemIdAndMedia: ItemIdAndMediaArg;
+  updatePost: ({}: UpdateThunkArg) => void;
 }
 
-const PostCreate: FC<PostCreateProps> = ({ closeModal, createPost }) => {
+const PostUpdate: FC<PostUpdateProps> = ({
+  closeModal,
+  itemIdAndMedia,
+  updatePost,
+}) => {
   const [titleValue, setTitleValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
   const [fileValue, setFileValue] = useState<FileList | null>(null);
+  const [mediaToDelete, setMediaToDelete] = useState<string[]>([]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,22 +28,24 @@ const PostCreate: FC<PostCreateProps> = ({ closeModal, createPost }) => {
 
       if (fileValue) {
         for (let i = 0; i < fileValue.length; i++) {
-          formData.append("images[]", fileValue[i]);
+          formData.append("mediaToAdd[]", fileValue[i]);
         }
       }
 
-      createPost({
+      updatePost({
+        id: itemIdAndMedia.id,
         title: titleValue,
         description: descriptionValue,
         formData: formData,
+        mediaToDelete,
       });
       closeModal();
     } else {
-      alert("Пустой заголовок, введите текст");
+      alert("Заголовок пустой");
     }
   };
   return (
-    <ModalLayout onClose={closeModal} title="Создание поста">
+    <ModalLayout onClose={closeModal} title="Обновить пост">
       <PostForm
         titleValue={titleValue}
         setTitleValue={setTitleValue}
@@ -44,10 +53,13 @@ const PostCreate: FC<PostCreateProps> = ({ closeModal, createPost }) => {
         setDescriptionValue={setDescriptionValue}
         setFileValue={setFileValue}
         handleSubmit={handleSubmit}
-        textBtn="Создать"
+        textBtn="Обновить"
+        media={itemIdAndMedia.media}
+        mediaToDelete={mediaToDelete}
+        setMediaToDelete={setMediaToDelete}
       />
     </ModalLayout>
   );
 };
 
-export default memo(PostCreate);
+export default PostUpdate;

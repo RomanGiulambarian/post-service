@@ -56,7 +56,7 @@ export class PostService {
     id: string,
     updatePostDto: UpdatePostDto,
     mediaToAdd?: Express.Multer.File[],
-  ): Promise<UpdateResult> {
+  ): Promise<Post> {
     if (updatePostDto.mediaToDelete?.length > 0) {
       await this.mediaService.deleteMedia(updatePostDto.mediaToDelete);
     }
@@ -65,10 +65,12 @@ export class PostService {
       await this.mediaService.createMedia(mediaToAdd, id);
     }
 
-    return await this.postRepository.update(id, {
+    await this.postRepository.update(id, {
       title: updatePostDto.title,
       description: updatePostDto.description,
     });
+
+    return this.findOne(id);
   }
 
   async remove(id: string): Promise<void> {

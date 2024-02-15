@@ -1,0 +1,17 @@
+.textarea-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.textarea {
+  resize: none;
+  height: 140px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.label {
+  font-size: 16px;
+  line-height: 1;
+}

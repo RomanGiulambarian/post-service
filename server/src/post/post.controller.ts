@@ -32,7 +32,7 @@ export class PostController {
   ) {}
 
   @Post()
-  @UseInterceptors(FilesInterceptor('images'))
+  @UseInterceptors(FilesInterceptor('images[]'))
   async create(
     @Body() createPostDto: CreatePostDto,
     @UploadedFiles(
@@ -64,7 +64,7 @@ export class PostController {
   }
 
   @Put(':id')
-  @UseInterceptors(FilesInterceptor('mediaToAdd'))
+  @UseInterceptors(FilesInterceptor('mediaToAdd[]'))
   async update(
     @Param('id') id: string,
     @Body() updatePostDto: UpdatePostDto,

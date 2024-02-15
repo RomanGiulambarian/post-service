@@ -1,9 +1,10 @@
-import Main from '../app/main';
-import MainLayout from '../components/main-layout';
+import Login from "../app/login";
+import Main from "../app/main";
+import MainLayout from "../components/main-layout";
 
 export const routes = [
   {
-    path: '/',
+    path: "/",
     element: <MainLayout />,
     children: [
       {
@@ -11,7 +12,11 @@ export const routes = [
         element: <Main />,
       },
       {
-        path: '*',
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "*",
         element: <h1>Нет страницы</h1>,
       },
     ],

@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import noPhotoImg from "../../assets/img/nophoto.jpg";
 import { Navigation } from "swiper/modules";
+import { ItemIdAndMediaArg } from "../../app/main";
 
 interface PostItemProps extends RatingProps {
   isFirst?: boolean;
@@ -15,6 +16,8 @@ interface PostItemProps extends RatingProps {
   description: string;
   postImgs: { id: string }[];
   onDelete: (id: string) => void;
+  openModalUpdatePost: () => void;
+  setItemIdAndMedia: (arg: ItemIdAndMediaArg) => void;
 }
 
 const PostItem: FC<PostItemProps> = ({
@@ -25,7 +28,14 @@ const PostItem: FC<PostItemProps> = ({
   description,
   rating,
   onDelete,
+  openModalUpdatePost,
+  setItemIdAndMedia,
 }) => {
+  const handleClick = () => {
+    openModalUpdatePost();
+    setItemIdAndMedia({ id, media: postImgs });
+  };
+
   return (
     <div
       className={`${styles.PostItem} ${isFirst ? styles["PostItem--first"] : ""}`}
@@ -72,7 +82,7 @@ const PostItem: FC<PostItemProps> = ({
         <p className={styles.description}>{description}</p>
         <div className={styles.btns__box}>
           {!isFirst && <Rating rating={rating} />}
-          <Button>Обновить пост</Button>
+          <Button onClick={handleClick}>Обновить пост</Button>
         </div>
       </div>
     </div>
