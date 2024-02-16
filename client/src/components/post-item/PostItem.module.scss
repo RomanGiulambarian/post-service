@@ -1,0 +1,76 @@
+.PostItem {
+  position: relative;
+  border: 1px solid #f4f4f4;
+  border-radius: 12px;
+  box-shadow:
+    0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 6px 0px rgba(0, 0, 0, 0.04),
+    0px 10px 20px 0px rgba(0, 0, 0, 0.04);
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+
+    &--first {
+      height: 500px;
+    }
+  }
+
+  &__footer {
+    padding: 24px 16px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    &--first {
+      gap: 24px;
+    }
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  h2 {
+    font-size: 28px;
+    padding-right: 15px;
+    word-break: break-word;
+  }
+}
+
+.description {
+  font-size: 24px;
+  word-break: break-word;
+}
+
+.btns__box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteBtn {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  z-index: 2;
+}

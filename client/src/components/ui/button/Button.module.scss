@@ -1,0 +1,14 @@
+.Button {
+    align-self: flex-end;
+    padding: 13px 24px 12px;
+    height: 45px;
+    font-size: 16px;
+    line-height: 18px;
+    border: 2px solid #0a0a0a;
+    border-radius: 60px;
+    transition: opacity 0.2s ease-in-out;
+  
+    &:hover {
+      opacity: 0.6;
+    }
+  }

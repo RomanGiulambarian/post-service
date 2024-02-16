@@ -1,0 +1,36 @@
+.Rating {
+  display: flex;
+  gap: 24px;
+}
+
+.like,
+.dislike {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    color: #4f4f4f;
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  svg path {
+    transition: fill 0.2s ease-in;
+    cursor: pointer;
+  }
+}
+
+.like {
+  .active,
+  svg:hover path {
+    fill: #219653;
+  }
+}
+
+.dislike {
+  .active,
+  svg:hover path {
+    fill: #eb5757;
+  }
+}

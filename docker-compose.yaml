@@ -7,24 +7,38 @@ services:
     ports: 
        - 5432:5432
     env_file: 
-       - dev.env
+       - ./server/dev.env
     environment:
        PG_DATA: /var/lib/postgresql/data
     image: postgres:16.1-alpine
     volumes:
         - ./pgdata:/var/lib/postgresql/data
-  app:
+  server:
     working_dir: /app 
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
     container_name: nestapp
     ports:
       - '8080:8080'
     env_file: 
-       - dev.env
+       - ./server/dev.env
     depends_on:
       - db_auth
     volumes:
-      - ./.:/app/.
+      - /server/node_modules
+      - ./server:/app
     restart: always
+  client:
+    build:
+      context: ./client 
+      dockerfile: Dockerfile
+    ports:
+      - '8010:8010'
+    env_file:
+      - ./client/dev.env
+    depends_on:
+      - server
+    volumes:
+      - /client/node_modules
+      - ./client:/app

@@ -1,0 +1,15 @@
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.label {
+  font-size: 16px;
+  line-height: 1;
+}

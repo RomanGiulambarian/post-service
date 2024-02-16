@@ -1,0 +1,44 @@
+.PostForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  input[type="file"] {
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
+.imgs__box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .img {
+    width: 100px;
+    border: 1px solid #000;
+  }
+
+  div {
+    position: relative;
+  }
+}
+
+.deleteImg__btn {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+}
+
+.selectedImg {
+  fill: rgb(46, 223, 46);
+}

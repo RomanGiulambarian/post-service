@@ -1,0 +1,15 @@
+.IndentBox {
+  &-margin {
+    &-small {
+      margin-bottom: 12px;
+    }
+
+    &-medium {
+      margin-bottom: 24px;
+    }
+
+    &-large {
+      margin-bottom: 32px;
+    }
+  }
+}
