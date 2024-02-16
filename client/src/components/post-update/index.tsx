@@ -44,6 +44,14 @@ const PostUpdate: FC<PostUpdateProps> = ({
       alert("Заголовок пустой");
     }
   };
+
+  const handleClickOnDeleteImgBtn = (id: string) => {
+    const newSelectedImgIds = mediaToDelete.includes(id)
+      ? mediaToDelete.filter((selectedId) => selectedId !== id)
+      : [...mediaToDelete, id];
+    setMediaToDelete(newSelectedImgIds);
+  };
+
   return (
     <ModalLayout onClose={closeModal} title="Обновить пост">
       <PostForm
@@ -56,7 +64,7 @@ const PostUpdate: FC<PostUpdateProps> = ({
         textBtn="Обновить"
         media={itemIdAndMedia.media}
         mediaToDelete={mediaToDelete}
-        setMediaToDelete={setMediaToDelete}
+        handleClickOnDeleteImgBtn={handleClickOnDeleteImgBtn}
       />
     </ModalLayout>
   );

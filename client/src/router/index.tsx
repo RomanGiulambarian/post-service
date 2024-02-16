@@ -1,6 +1,7 @@
 import Login from "../app/login";
 import Main from "../app/main";
 import MainLayout from "../components/main-layout";
+import RequireAuth from "./RequireAuth";
 
 export const routes = [
   {
@@ -9,7 +10,11 @@ export const routes = [
     children: [
       {
         index: true,
-        element: <Main />,
+        element: (
+          <RequireAuth>
+            <Main />
+          </RequireAuth>
+        ),
       },
       {
         path: "login",

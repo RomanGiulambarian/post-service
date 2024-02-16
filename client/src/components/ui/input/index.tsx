@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, InputHTMLAttributes, useState } from "react";
+import { ChangeEvent, FC, InputHTMLAttributes } from "react";
 import styles from "./Input.module.scss";
 
 interface InputProps {

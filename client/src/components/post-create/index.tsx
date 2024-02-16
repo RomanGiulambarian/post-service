@@ -1,7 +1,7 @@
 import { FC, FormEvent, memo, useState } from "react";
 import ModalLayout from "../modal-layout";
 import PostForm from "../post-form";
-import { PostResBody } from "../../api/interface";
+import { PostResBody } from "../../api/post-service/interface";
 
 interface PostCreateProps {
   closeModal: () => void;

@@ -12,9 +12,9 @@ interface PostFormProps {
   setFileValue: (fileValue: FileList | null) => void;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
   textBtn: string;
-  media: { id: string }[];
-  mediaToDelete: string[];
-  setMediaToDelete: (id: string[]) => void;
+  media?: { id: string }[];
+  mediaToDelete?: string[];
+  handleClickOnDeleteImgBtn?: (id: string) => void;
 }
 
 const PostForm: FC<PostFormProps> = ({
@@ -27,14 +27,8 @@ const PostForm: FC<PostFormProps> = ({
   textBtn,
   media,
   mediaToDelete,
-  setMediaToDelete,
+  handleClickOnDeleteImgBtn,
 }) => {
-  const handleClickOnDeleteImgBtn = (id: string) => {
-    const newSelectedImgIds = mediaToDelete.includes(id)
-      ? mediaToDelete.filter((selectedId) => selectedId !== id)
-      : [...mediaToDelete, id];
-    setMediaToDelete(newSelectedImgIds);
-  };
   return (
     <form className={styles.PostForm} onSubmit={handleSubmit}>
       <Input
@@ -59,13 +53,17 @@ const PostForm: FC<PostFormProps> = ({
         <Button>{textBtn}</Button>
       </div>
 
-      {textBtn === "Обновить" && media.length > 0 && (
+      {textBtn === "Обновить" && media && media.length > 0 && (
         <div className={styles.imgs__box}>
           {media.map((img) => (
             <div key={img.id}>
               <svg
                 className={styles.deleteImg__btn}
-                onClick={() => handleClickOnDeleteImgBtn(img.id)}
+                onClick={() => {
+                  if (handleClickOnDeleteImgBtn) {
+                    handleClickOnDeleteImgBtn(img.id);
+                  }
+                }}
                 width="24"
                 height="24"
                 viewBox="0 0 16 16"
@@ -73,7 +71,7 @@ const PostForm: FC<PostFormProps> = ({
               >
                 <path
                   className={
-                    mediaToDelete.includes(img.id) ? styles.selectedImg : ""
+                    mediaToDelete?.includes(img.id) ? styles.selectedImg : ""
                   }
                   fillRule="evenodd"
                   clipRule="evenodd"

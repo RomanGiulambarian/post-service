@@ -1,13 +1,13 @@
-import { UpdateResBody } from "../../api/interface";
+import { UpdateResBody } from "../../api/post-service/interface";
 
 export interface Post {
   userId: number | null;
   id: string;
   title: string;
   description: string;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
   media: { id: string }[];
 }
 

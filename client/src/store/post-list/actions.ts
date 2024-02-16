@@ -1,13 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import PostService from "../../api";
-import { PostResBody } from "../../api/interface";
+import { PostResBody } from "../../api/post-service/interface";
 import { UpdateThunkArg } from "./interface";
+import Service from "../../services";
+import { services } from "../..";
 
 export const fetchPosts = createAsyncThunk(
   "postList/fetchPosts",
   async (_, thunkAPI) => {
     try {
-      return await PostService.getAll();
+      return await services.postService.getAll();
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -18,7 +19,7 @@ export const createPost = createAsyncThunk(
   "postList/createPost",
   async (postParams: PostResBody, thunkAPI) => {
     try {
-      return await PostService.create(postParams);
+      return await services.postService.create(postParams);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
@@ -29,7 +30,7 @@ export const updatePost = createAsyncThunk(
   "postList/updatePost",
   async (updateParams: UpdateThunkArg, thunkAPI) => {
     try {
-      return await PostService.update(updateParams);
+      return await services.postService.update(updateParams);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }

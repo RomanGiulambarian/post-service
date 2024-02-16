@@ -15,7 +15,7 @@ import PostCreate from "../../components/post-create";
 import { open, close } from "../../store/modal/slice";
 import { deletePost } from "../../store/post-item/actions";
 import Loader from "../../components/ui/loader";
-import { PostResBody } from "../../api/interface";
+import { PostResBody } from "../../api/post-service/interface";
 import { UpdateThunkArg } from "../../store/post-list/interface";
 import PostUpdate from "../../components/post-update";
 
